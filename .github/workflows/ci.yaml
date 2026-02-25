@@ -7,19 +7,21 @@ on:
   workflow_dispatch:
     inputs:
       terraform_cli_version:
-        description: 'Terraform CLI Version'
+        description: "Terraform CLI Version"
         required: true
-        default: 'latest'
+        default: "latest"
         type: string
 
 jobs:
   validate_and_plan:
     uses: nrit-solutions/alz-nrit-templates/.github/workflows/ci-template.yaml@main
-    name: 'CI'
+    name: "CI"
+    secrets:
+      INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
     permissions:
       id-token: write
       contents: read
       pull-requests: write
     with:
-      root_module_folder_relative_path: '.'
+      root_module_folder_relative_path: "."
       terraform_cli_version: ${{ inputs.terraform_cli_version }}
